@@ -1,0 +1,26 @@
+﻿@addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <style type="text/css">
+        body { font-family: Arial; font-size: 10pt; }
+    </style>
+</head>
+<body>
+    <form method="post" asp-controller="Home" asp-action="Index" enctype="multipart/form-data">
+        @* <input type="file" name="postedFiles" multiple="multiple" /> *@
+        <input type="file" name="postedFiles" multiple="multiple" accept=".doc, .docx, .xls, .xlsx .pdf" />
+        <input type="submit" value="Upload" />
+        <br />
+        <br />
+        <span style="color:green">@Html.Raw(ViewBag.Message)</span>
+    </form>
+</body>
+</html>

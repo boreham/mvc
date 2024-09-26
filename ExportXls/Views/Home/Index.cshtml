@@ -1,0 +1,53 @@
+﻿@model IEnumerable<ExportXls.Models.Customer>
+@addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers
+@using NonFactors.Mvc.Grid;
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <style type="text/css">
+        body { font-family: Arial; font-size: 10pt; }
+    </style>
+    <link href="~/css/mvc-grid/mvc-grid.css" rel="stylesheet" />
+</head>
+<body>
+    <h4>Customers</h4>
+    <hr />
+    <div id="Grid">
+        @(Html.Grid(Model).Build(columns =>
+            {
+                columns.Add(model => model.CustomerID).Titled("CustomerID");
+                columns.Add(model => model.ContactName).Titled("ContactName");
+                columns.Add(model => model.City).Titled("City");
+                columns.Add(model => model.Country).Titled("Country");
+            })
+        )
+    </div>
+    <br /><br />
+    <form method="post" asp-action="ExportXls" asp-controller="Home">
+        <input type="hidden" name="GridHtml" />
+        <input type="submit" id="btnSubmit" value="Export" />
+    </form>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            //Add CSS to the Table for formatting.
+            $("#Grid table").attr("cellpadding", "5");
+            $("#Grid table").css({ "border-collapse": "collapse", "border": "1px solid #ccc" });
+            $("#Grid th").css({ "background-color": "#B8DBFD", "border": "1px solid #ccc" });
+            $("#Grid td").css({ "width": "150px", "border": "1px solid #ccc" });
+
+            //Assign Click event to Button.
+            $("#btnSubmit").click(function () {
+                $("input[name='GridHtml']").val($("#Grid").html());
+            });
+        });
+    </script>
+</body>
+</html>
